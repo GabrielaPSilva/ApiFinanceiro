@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "513tac2+Lk33bOUIlt1/b+gaiTcPGdIO5iHiBcUJGBurCo4qG0lUDGLNvrHHdiU5xN/ynPUEYFwT0qJsi2ciTw==",
+  "success": true,
+  "projectFilePath": "C:\\Git\\APIFinanceiro\\APIFinanceiro.Model\\APIFinanceiro.Model.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1803",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "You are running the 'restore' operation with an 'HTTP' source, 'http://nuget.fiap.com.br/nuget'. Non-HTTPS access will be removed in a future version. Consider migrating to an 'HTTPS' source."
+    }
+  ]
+}
