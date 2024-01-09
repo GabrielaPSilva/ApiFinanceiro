@@ -1,3 +1,4 @@
+using APIFinanceiro.Initializers;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.OpenApi.Models;
 
@@ -7,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+new SessionInitializer().Initialize(builder.Services);
 
 builder.Services.AddSwaggerGen(options =>
 {
