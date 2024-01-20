@@ -1,0 +1,12 @@
+C:\Git\APIFinanceiro\APIFinanceiro.Model\bin\Debug\net7.0\APIFinanceiro.Model.deps.json
+C:\Git\APIFinanceiro\APIFinanceiro.Model\bin\Debug\net7.0\APIFinanceiro.Model.dll
+C:\Git\APIFinanceiro\APIFinanceiro.Model\bin\Debug\net7.0\APIFinanceiro.Model.pdb
+C:\Git\APIFinanceiro\APIFinanceiro.Model\obj\Debug\net7.0\APIFinanceiro.Model.csproj.AssemblyReference.cache
+C:\Git\APIFinanceiro\APIFinanceiro.Model\obj\Debug\net7.0\APIFinanceiro.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Git\APIFinanceiro\APIFinanceiro.Model\obj\Debug\net7.0\APIFinanceiro.Model.AssemblyInfoInputs.cache
+C:\Git\APIFinanceiro\APIFinanceiro.Model\obj\Debug\net7.0\APIFinanceiro.Model.AssemblyInfo.cs
+C:\Git\APIFinanceiro\APIFinanceiro.Model\obj\Debug\net7.0\APIFinanceiro.Model.csproj.CoreCompileInputs.cache
+C:\Git\APIFinanceiro\APIFinanceiro.Model\obj\Debug\net7.0\APIFinanceiro.Model.dll
+C:\Git\APIFinanceiro\APIFinanceiro.Model\obj\Debug\net7.0\refint\APIFinanceiro.Model.dll
+C:\Git\APIFinanceiro\APIFinanceiro.Model\obj\Debug\net7.0\APIFinanceiro.Model.pdb
+C:\Git\APIFinanceiro\APIFinanceiro.Model\obj\Debug\net7.0\ref\APIFinanceiro.Model.dll

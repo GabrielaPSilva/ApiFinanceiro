@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+new BusinessInitializer().Initialize(builder.Services);
+new DataInitializer().Initialize(builder.Services);
 new SessionInitializer().Initialize(builder.Services);
 
 builder.Services.AddSwaggerGen(options =>
