@@ -58,7 +58,8 @@ namespace APIFinanceiro.Data.Repositories
 						    INSERT INTO TB_Segmento
 							    (IdRisco, TipoSegmento, PercentualRendimento, TaxaAdm, MesesVigencia)
 						    VALUES
-							    (@IdRisco, @TipoSegmento, @PercentualRendimento, @TaxaAdm, @MesesVigencia)";
+							    (@IdRisco, @TipoSegmento, @PercentualRendimento, @TaxaAdm, @MesesVigencia);
+                            SELECT SCOPE_IDENTITY()";
 
             using (var transaction = connection.BeginTransaction())
             {

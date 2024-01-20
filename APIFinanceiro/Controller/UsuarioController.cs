@@ -9,6 +9,7 @@ namespace APIFinanceiro.Controller
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioService _usuarioService;
+
         public UsuarioController(IUsuarioService usuarioService)
         {
             _usuarioService = usuarioService;
@@ -21,9 +22,9 @@ namespace APIFinanceiro.Controller
             {
                 List<UsuarioModel> listaUsuarios = await _usuarioService.ListarUsuario();
 
-                if (listaUsuarios == null)
+                if (listaUsuarios == null || listaUsuarios.Count() == 0)
                 {
-                    return NotFound(new { erro = "Lista de clientes não encontrada" });
+                    return NotFound(new { erro = "Lista de usuários não encontrada" });
                 }
 
                 return Ok(listaUsuarios);
@@ -39,10 +40,10 @@ namespace APIFinanceiro.Controller
         {
             try
             {
-                //if (!tipoTelefone.IsValid(out string mensagemErro))
-                //{
-                //    return BadRequest(new { erro = mensagemErro });
-                //}
+                if (!usuario.IsValid(out string mensagemErro))
+                {
+                    return BadRequest(new { erro = mensagemErro });
+                }
 
                 var retornoCadastro = await _usuarioService.CadastrarUsuario(usuario);
 

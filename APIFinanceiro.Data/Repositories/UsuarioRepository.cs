@@ -26,15 +26,33 @@ namespace APIFinanceiro.Data.Repositories
 
             string query = @"
 						    SELECT
-							    *
-						    FROM
-							    TB_Usuario
-						    WHERE
-							    Ativo = 1
+	                            *
+                            FROM
+	                            TB_Usuario AS Users
+		                            INNER JOIN TB_Risco AS Risc ON Users.IdRisco = Risc.Id
+                            WHERE
+	                            Users.Ativo = 1
                             ORDER BY
-                                Nome";
+	                            Users.Nome";
 
-            return (await connection.QueryAsync<UsuarioModel>(query)).ToList();
+            var lookupUsuario = new Dictionary<int, UsuarioModel>();
+
+            await connection.QueryAsync<UsuarioModel, RiscoModel, UsuarioModel>(query,
+                (usuario, risco) =>
+                {
+                    if (!lookupUsuario.TryGetValue(usuario.Id, out var usuarioExistente))
+                    {
+                        usuarioExistente = usuario;
+                        lookupUsuario.Add(usuario.Id, usuarioExistente);
+                    }
+
+                    usuarioExistente.Risco = risco;
+
+                    return null!;
+                },
+                splitOn: "Id");
+
+            return lookupUsuario.Values.ToList();
         }
 
         public async Task<UsuarioModel> RetornarUsuarioCPF(string CPF)
@@ -42,15 +60,26 @@ namespace APIFinanceiro.Data.Repositories
             IDbConnection connection = await _dbSession.GetConnectionAsync("DBFinanceiro");
 
             string query = @"
-						     SELECT
-							     *
-						     FROM
-							     TB_Usuario
-						     WHERE
-                                 CPF = @CPF
-							     AND Ativo = 1";
+						    SELECT
+	                            *
+                            FROM
+	                            TB_Usuario AS Users
+		                            INNER JOIN TB_Risco AS Risc ON Users.IdRisco = Risc.Id
+                            WHERE
+	                            Users.Ativo = 1
+                                AND Users.CPF = @CPF
+                            ORDER BY
+	                            Users.Nome";
 
-            return await connection.QueryFirstOrDefaultAsync<UsuarioModel>(query, new { CPF });
+
+            return (await connection.QueryAsync<UsuarioModel, RiscoModel, UsuarioModel>(query,
+                (usuario, risco) =>
+                {
+                    usuario.Risco = risco;
+                    return usuario;
+                },
+                new { CPF },
+                splitOn: "Id")).FirstOrDefault()!;
         }
 
         public async Task<int> CadastrarUsuario(UsuarioModel usuario)
@@ -59,9 +88,10 @@ namespace APIFinanceiro.Data.Repositories
 
             string query = @"
 						    INSERT INTO TB_Usuario
-							    (IdRisco, Nome, Email, Telefone, CPF)
+							    (IdRisco, Nome, Email, Telefone, CPF, DataNascimento)
 						    VALUES
-							    (@IdRisco, @Nome, @Email, @Telefone, @CPF)";
+							    (@IdRisco, @Nome, @Email, @Telefone, @CPF, @DataNascimento);
+                            SELECT SCOPE_IDENTITY()";
 
             using (var transaction = connection.BeginTransaction())
             {

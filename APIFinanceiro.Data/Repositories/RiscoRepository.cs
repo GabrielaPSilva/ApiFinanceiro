@@ -55,10 +55,12 @@ namespace APIFinanceiro.Data.Repositories
             IDbConnection connection = await _dbSession.GetConnectionAsync("DBFinanceiro");
 
             string query = @"
-						    INSERT INTO TB_Risco
+						    INSERT INTO 
+                                TB_Risco
 							    (GrauRisco, Descricao)
 						    VALUES
-							    (@GrauRisco, @Descricao)";
+							    (@GrauRisco, @Descricao);
+                            SELECT SCOPE_IDENTITY()";
 
             using (var transaction = connection.BeginTransaction())
             {
