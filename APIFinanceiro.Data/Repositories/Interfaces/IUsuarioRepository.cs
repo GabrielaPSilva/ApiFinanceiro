@@ -14,7 +14,6 @@ namespace APIFinanceiro.Data.Repositories.Interfaces
         Task<int> CadastrarUsuario(UsuarioModel usuario);
         Task<bool> AlterarUsuario(UsuarioModel usuario);
         Task<bool> DesativarUsuario(int idUsuario);
-        Task<bool> DesativarUsuarioCPF(string CPF);
         Task<bool> ReativarUsuario(string CPF);
     }
 }

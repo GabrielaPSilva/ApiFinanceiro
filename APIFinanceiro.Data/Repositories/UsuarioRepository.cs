@@ -167,33 +167,6 @@ namespace APIFinanceiro.Data.Repositories
             }
         }
 
-        public async Task<bool> DesativarUsuarioCPF(string CPF)
-        {
-            IDbConnection connection = await _dbSession.GetConnectionAsync("DBFinanceiro");
-            string query = @"
-                            UPDATE
-        	                    TB_Usuario
-                            SET
-        	                    Ativo = 0
-                            WHERE
-        	                    CPF = @CPF";
-
-            using (var transaction = connection.BeginTransaction())
-            {
-                try
-                {
-                    var retorno = await connection.ExecuteAsync(query, new { CPF }, transaction: transaction) > 0;
-                    transaction.Commit();
-                    return retorno;
-                }
-                catch
-                {
-                    transaction.Rollback();
-                    return false;
-                }
-            }
-        }
-
         public async Task<bool> ReativarUsuario(string CPF)
         {
             IDbConnection connection = await _dbSession.GetConnectionAsync("DBFinanceiro");

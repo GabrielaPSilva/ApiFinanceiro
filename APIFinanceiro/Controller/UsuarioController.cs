@@ -35,6 +35,26 @@ namespace APIFinanceiro.Controller
             }
         }
 
+        [HttpGet("{CPF}")]
+        public async Task<IActionResult> Retornar(string CPF)
+        {
+            try
+            {
+                UsuarioModel usuario = await _usuarioService.RetornarUsuarioCPF(CPF);
+
+                if (usuario == null)
+                {
+                    return NotFound(new { erro = "Usuário não encontrado" });
+                }
+
+                return Ok(usuario);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> CadastrarUsuario([FromBody] UsuarioModel usuario)
         {
@@ -53,6 +73,63 @@ namespace APIFinanceiro.Controller
                 }
 
                 return BadRequest(new { erro = "Erro ao cadastrar usuário" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPut("{CPF}")]
+        public async Task<IActionResult> Alterar(string CPF, [FromBody] UsuarioModel usuario)
+        {
+            try
+            {
+                if (!usuario.IsValid(out string mensagemErro))
+                {
+                    return BadRequest(new { erro = mensagemErro });
+                }
+
+                if (await _usuarioService.RetornarUsuarioCPF(CPF) == null)
+                {
+                    return NotFound(new { erro = "Usuário não encontrado" });
+                }
+
+                usuario.CPF = CPF;
+
+                if (await _usuarioService.AlterarUsuario(usuario))
+                {
+                    return Ok(usuario);
+                }
+
+                return BadRequest(new { erro = "Erro ao alterar usuário" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpDelete("{CPF}")]
+        public async Task<IActionResult> Deletar(string CPF)
+        {
+            try
+            {
+                var retornarUsuario = await _usuarioService.RetornarUsuarioCPF(CPF);
+
+                if (retornarUsuario == null)
+                {
+                    return NotFound(new { erro = "Usuário não encontrado" });
+                }
+
+                var idUsuario = retornarUsuario.Id;
+
+                if (await _usuarioService.DesativarUsuario(idUsuario))
+                {
+                    return NoContent();
+                }
+
+                return BadRequest(new { erro = "Erro ao deletar usuário" });
             }
             catch (Exception ex)
             {

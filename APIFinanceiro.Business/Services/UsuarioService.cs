@@ -49,11 +49,6 @@ namespace APIFinanceiro.Business.Services
             return await _usuarioRepository.DesativarUsuario(idUsuario);
         }
 
-        public async Task<bool> DesativarUsuarioCPF(string CPF)
-        {
-            return await _usuarioRepository.DesativarUsuarioCPF(CPF);
-        }
-
         public async Task<bool> ReativarUsuario(string CPF)
         {
             return await _usuarioRepository.ReativarUsuario(CPF);
