@@ -36,7 +36,7 @@ namespace APIFinanceiro.Controller
         }
 
         [HttpGet("{CPF}")]
-        public async Task<IActionResult> Retornar(string CPF)
+        public async Task<IActionResult> RetornarUsuárioCPF(string CPF)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace APIFinanceiro.Controller
                     return Created($"/api/usuario/{usuario.Id}", retornoCadastro);
                 }
 
-                return BadRequest(new { erro = "Erro ao cadastrar usuário" });
+                return BadRequest(new { erro = "Erro ao cadastrar o usuário" });
             }
             catch (Exception ex)
             {
@@ -102,7 +102,7 @@ namespace APIFinanceiro.Controller
                     return Ok(usuario);
                 }
 
-                return BadRequest(new { erro = "Erro ao alterar usuário" });
+                return BadRequest(new { erro = "Erro ao alterar o usuário" });
             }
             catch (Exception ex)
             {

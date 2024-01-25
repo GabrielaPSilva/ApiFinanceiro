@@ -10,7 +10,7 @@ namespace APIFinanceiro.Business.Services.Interfaces
     public interface IRiscoService
     {
         Task<List<RiscoModel>> ListarRisco();
-        Task<RiscoModel> RetornarRiscoDescricao(string Descricao);
+        Task<RiscoModel> RetornarRiscoDescricao(string descricao);
         Task<int> CadastrarRisco(RiscoModel risco);
         Task<bool> AlterarRisco(RiscoModel risco);
         Task<bool> RemoverRisco(int idRisco);

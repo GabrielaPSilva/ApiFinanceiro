@@ -24,9 +24,9 @@ namespace APIFinanceiro.Business.Services
             return await _riscoRepository.ListarRisco();
         }
 
-        public async Task<RiscoModel> RetornarRiscoDescricao(string Descricao)
+        public async Task<RiscoModel> RetornarRiscoDescricao(string descricao)
         {
-            return await _riscoRepository.RetornarRiscoDescricao(Descricao);
+            return await _riscoRepository.RetornarRiscoDescricao(descricao);
         }
 
         public async Task<int> CadastrarRisco(RiscoModel risco)

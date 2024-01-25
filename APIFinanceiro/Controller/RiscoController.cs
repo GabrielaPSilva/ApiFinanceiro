@@ -25,7 +25,7 @@ namespace APIFinanceiro.Controller
 
                 if (listaRisco == null || listaRisco.Count() == 0)
                 {
-                    return NotFound(new { erro = "Lista de risco não encontrada" });
+                    return NotFound(new { erro = "Lista de riscos não encontrada" });
                 }
 
                 return Ok(listaRisco);
@@ -36,15 +36,35 @@ namespace APIFinanceiro.Controller
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CadastrarUsuario([FromBody] RiscoModel risco)
+        [HttpGet("{descricao}")]
+        public async Task<IActionResult> RetornarRiscoDescricao(string descricao)
         {
             try
             {
-                //if (!tipoTelefone.IsValid(out string mensagemErro))
-                //{
-                //    return BadRequest(new { erro = mensagemErro });
-                //}
+                RiscoModel usuario = await _riscoService.RetornarRiscoDescricao(descricao);
+
+                if (usuario == null)
+                {
+                    return NotFound(new { erro = "Risco não encontrado" });
+                }
+
+                return Ok(usuario);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CadastrarRisco([FromBody] RiscoModel risco)
+        {
+            try
+            {
+                if (!risco.IsValid(out string mensagemErro))
+                {
+                    return BadRequest(new { erro = mensagemErro });
+                }
 
                 var retornoCadastro = await _riscoService.CadastrarRisco(risco);
 
@@ -54,6 +74,35 @@ namespace APIFinanceiro.Controller
                 }
 
                 return BadRequest(new { erro = "Erro ao cadastrar risco" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+
+        [HttpPut("{descricao}")]
+        public async Task<IActionResult> AlterarRisco(string descricao, [FromBody] RiscoModel risco)
+        {
+            try
+            {
+                if (!risco.IsValid(out string mensagemErro))
+                {
+                    return BadRequest(new { erro = mensagemErro });
+                }
+
+                if (await _riscoService.RetornarRiscoDescricao(descricao) == null)
+                {
+                    return NotFound(new { erro = "Risco não encontrado" });
+                }
+
+                if (await _riscoService.AlterarRisco(risco))
+                {
+                    return Ok(risco);
+                }
+
+                return BadRequest(new { erro = "Erro ao alterar o risco" });
             }
             catch (Exception ex)
             {
