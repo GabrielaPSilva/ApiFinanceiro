@@ -97,7 +97,7 @@ namespace APIFinanceiro.Model.Entities
             mensagemErro = string.Empty;
 
             if (!isValid)
-                mensagemErro = "Os Meses de vigência deve ser um inteiro.\n";
+                mensagemErro = "Os meses de vigência deve ser um inteiro.\n";
 
             return isValid;
         }

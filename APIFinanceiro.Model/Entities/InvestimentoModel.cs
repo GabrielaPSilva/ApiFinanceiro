@@ -45,21 +45,21 @@ namespace APIFinanceiro.Model.Entities
 
             if (!isValidSaldo)
             {
-                mensagemErro = "O Saldo deve ser um decimal.\n";
+                mensagemErro = "O saldo deve ser um decimal.\n";
                 return isValidSaldo;
             }
 
 
             if (!isValidValorRendimento)
             {
-                mensagemErro = "O Valor de rendimento deve ser um decimal.\n";
+                mensagemErro = "O valor de rendimento deve ser um decimal.\n";
                 return isValidValorRendimento;
             }
 
 
             if (!isValidValorFinal)
             {
-                mensagemErro = "O Valor de rendimento deve ser um decimal.\n";
+                mensagemErro = "O valor de rendimento deve ser um decimal.\n";
                 return isValidValorFinal;
             }
 

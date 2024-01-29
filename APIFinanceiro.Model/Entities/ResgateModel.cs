@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace APIFinanceiro.Model.Entities
@@ -11,7 +13,7 @@ namespace APIFinanceiro.Model.Entities
         public int Id { get; set; }
         public int IdInvestimento { get; set; }
         public Decimal Valor { get; set; }
-        public DateTime DataResgate { get; set; }
+        public string? DataResgate { get; set; }
         public bool IsValid(out string mensagemErro)
         {
             bool isValid = true;
@@ -40,7 +42,7 @@ namespace APIFinanceiro.Model.Entities
             mensagemErro = string.Empty;
 
             if (!isValid)
-                mensagemErro = "O Valor do resgate deve ser um decimal.\n";
+                mensagemErro = "O valor do resgate deve ser um decimal.\n";
 
             return isValid;
         }
@@ -48,13 +50,29 @@ namespace APIFinanceiro.Model.Entities
         private bool ValidarDataResgate(out string mensagemErro)
         {
             bool isValid = true;
-            isValid = DataResgate!.GetType() == typeof(DateTime);
+            StringBuilder sbMensagemErro = new StringBuilder();
 
-            mensagemErro = string.Empty;
+            string dataNascimento = DataResgate!;
 
-            if (!isValid)
-                mensagemErro = "O Valor do resgate deve ser um DateTime dd/MM/yyyy HH:mm:ss.\n";
+            string dataRegexPattern = @"^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$";
 
+            isValid = isValid && !string.IsNullOrEmpty(dataNascimento);
+            isValid = isValid && Regex.IsMatch(dataNascimento, dataRegexPattern);
+
+            if (isValid)
+            {
+                if (!DateTime.TryParseExact(dataNascimento, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+                {
+                    isValid = false;
+                    sbMensagemErro.AppendLine("Informe a data como yyyy-MM-dd.\n");
+                }
+            }
+            else
+            {
+                sbMensagemErro.AppendLine("Informe uma data de resgate válida.\n");
+            }
+
+            mensagemErro = sbMensagemErro.ToString().TrimEnd();
             return isValid;
         }
     }

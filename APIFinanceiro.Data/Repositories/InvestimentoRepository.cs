@@ -29,15 +29,15 @@ namespace APIFinanceiro.Data.Repositories
 	                            Users.Nome,
 	                            Users.CPF,
 	                            Users.Email,
-	                            Segm.Id,
-	                            Segm.TipoSegmento,
-	                            Segm.PercentualRendimento,
-	                            Segm.TaxaAdm,
-	                            Segm.MesesVigencia,
 	                            Invest.Id,
 	                            Invest.Saldo,
 	                            Invest.ValorRendimento,
-	                            Invest.ValorFinal
+	                            Invest.ValorFinal,
+                                Segm.Id,
+	                            Segm.TipoSegmento,
+	                            Segm.PercentualRendimento,
+	                            Segm.TaxaAdm,
+	                            Segm.MesesVigencia
                             FROM 
 	                            TB_Usuario AS Users
 		                            INNER JOIN TB_Investimento AS Invest ON Users.Id = Invest.IdUsuario

@@ -56,7 +56,7 @@ CREATE TABLE TB_Aplicacao (
 	Id INT IDENTITY(1,1) PRIMARY KEY,
 	IdInvestimento INT NOT NULL,
 	Valor DECIMAL NOT NULL,
-	DataAplicacao DATETIME NOT NULL,
+	DataAplicacao VARCHAR(10) NOT NULL,
 	CONSTRAINT FK_TBAplicacao_TBInvestimento FOREIGN KEY (IdInvestimento) REFERENCES TB_Investimento(Id)
 );
 GO
@@ -66,7 +66,7 @@ CREATE TABLE TB_Resgate (
 	Id INT IDENTITY(1,1) PRIMARY KEY,
 	IdInvestimento INT NOT NULL,
 	Valor DECIMAL NOT NULL,
-	DataResgate DATETIME NOT NULL,
+	DataResgate VARCHAR(10) NOT NULL,
 	CONSTRAINT FK_TBResgate_TBInvestimento FOREIGN KEY (IdInvestimento) REFERENCES TB_Investimento(Id)
 );
 GO

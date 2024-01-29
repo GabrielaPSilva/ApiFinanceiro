@@ -83,7 +83,7 @@ namespace APIFinanceiro.Model.Entities
             mensagemErro = string.Empty;
 
             if (!isValid)
-                mensagemErro = "Informe um endereço de e-mail válido.";
+                mensagemErro = "Informe um endereço de e-mail válido.\n";
 
             return isValid;
         }
@@ -102,7 +102,7 @@ namespace APIFinanceiro.Model.Entities
             mensagemErro = string.Empty;
 
             if (!isValid)
-                mensagemErro = "Informe um telefone válido.";
+                mensagemErro = "Informe um telefone válido.\n";
 
             return isValid;
         }
@@ -123,7 +123,7 @@ namespace APIFinanceiro.Model.Entities
             isValid = isValid && Regex.IsMatch(cpfLimpo, cpfRegexPattern);
 
             if (!isValid)
-                sbMensagemErro.AppendLine("Informe um CPF válido.");
+                sbMensagemErro.AppendLine("Informe um CPF válido.\n");
 
             mensagemErro = sbMensagemErro.ToString().TrimEnd();
             return isValid;
@@ -146,12 +146,12 @@ namespace APIFinanceiro.Model.Entities
                 if (!DateTime.TryParseExact(dataNascimento, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
                 {
                     isValid = false;
-                    sbMensagemErro.AppendLine("Informe a data de nascimento como yyyy-MM-dd");
+                    sbMensagemErro.AppendLine("Informe a data de nascimento como yyyy-MM-dd.\n");
                 }
             }
             else
             {
-                sbMensagemErro.AppendLine("Informe uma data de nascimento válida.");
+                sbMensagemErro.AppendLine("Informe uma data de nascimento válida.\n");
             }
 
             mensagemErro = sbMensagemErro.ToString().TrimEnd();
