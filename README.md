@@ -110,7 +110,9 @@ O usuário deve ser capaz de consultar os seus investimentos existentes.
 A consulta deve ser realizada pelo seu CPF.
 
 
+
 Cenários de testes XUnit do projeto
+-----------------------------------
 
 Usuário
 -------
@@ -133,83 +135,3 @@ Exclusão de usuário: O usuário deve ser capaz de excluir seu registro no sist
 
 Verificar se o usuário foi excluído com sucesso.
 
-Segmentos
----------
-
-Listagem de segmentos
-
-O administrador deve ser capaz de listar todos os segmentos cadastrados no sistema.
-
-Verificar se todos os segmentos são listados corretamente.
-
-Cadastro de segmento: O administrador deve ser capaz de cadastrar novos segmentos no sistema.
-
-Validar os dados de entrada, como nome e tipo, para garantir que sejam válidos.
-
-Verificar se o segmento foi cadastrado com sucesso.
-
-Edição de segmento: O administrador deve ser capaz de editar os dados de um segmento existente.
-
-Validar os dados de entrada, como nome e tipo, para garantir que sejam válidos.
-
-Verificar se os dados foram editados com sucesso.
-
-Exclusão de segmento: O administrador deve ser capaz de excluir um segmento do sistema.
-
-Verificar se o segmento foi excluído com sucesso.
-
-Graus de risco do investidor
-----------------------------
-
-Listagem de graus de risco
-
-O administrador e/ou usuário deve ser capaz de listar todos os graus de risco cadastrados no sistema.
-
-Verificar se todos os graus de risco são listados corretamente.
-
-Cadastro de grau de risco
-
-O administrador deve ser capaz de cadastrar novos graus de risco no sistema.
-
-Validar os dados de entrada, como nome e descrição, para garantir que sejam válidos.
-
-Verificar se o grau de risco foi cadastrado com sucesso.
-
-Edição de grau de risco
-
-O administrador deve ser capaz de editar os dados de um grau de risco existente.
-
-Validar os dados de entrada, como nome e descrição, para garantir que sejam válidos.
-
-Verificar se os dados foram editados com sucesso.
-
-Exclusão de grau de risco
-
-O administrador deve ser capaz de excluir um grau de risco do sistema.
-
-Verificar se o grau de risco foi excluído com sucesso.
-
-Investimento
-------------
-
-Realização de aplicação
-
-O usuário deve ser capaz de realizar uma aplicação em um segmento de investimento.
-
-Validar os dados de entrada, como valor da aplicação, tempo de expiração e taxa de rendimento, para garantir que sejam válidos.
-
-Verificar se a aplicação foi realizada com sucesso.
-
-Consulta de investimentos
-
-O usuário deve ser capaz de consultar uma lista de todas as suas aplicações, com seus respectivos saldos.
-
-Verificar se todas as aplicações são listadas corretamente, com seus respectivos saldos.
-
-Solicitação de resgate
-
-O usuário deve ser capaz de solicitar o resgate de uma aplicação.
-
-Validar os dados de entrada, como valor do resgate, para garantir que sejam válidos.
-
-Verificar se o resgate foi solicitado com sucesso.
