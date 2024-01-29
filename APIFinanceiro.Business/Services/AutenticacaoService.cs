@@ -30,15 +30,15 @@ namespace APIFinanceiro.Business.Services
         public string GerarToken(UsuarioPermissaoModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes("TokenManagement:Secret");
+            var key = Encoding.ASCII.GetBytes("Secret");
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Nome!),
-                    new Claim(ClaimTypes.Role, user.Permissao.ToString()!),
-                    new Claim("Id", user.Id.ToString()!)
+
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

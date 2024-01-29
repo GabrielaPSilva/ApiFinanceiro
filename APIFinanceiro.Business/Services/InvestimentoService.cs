@@ -90,6 +90,11 @@ namespace APIFinanceiro.Business.Services
         {
             if (resgate != null)
             {
+                var investimentoModel = new InvestimentoModel();
+
+                investimentoModel.IdUsuario = idUsuario;
+                investimentoModel.IdSegmento = idSegmento;
+
                 var valoresAnteriores = await RetornaInvestimentoUsuarioSegmento(idUsuario, idSegmento);
 
                 resgate.IdInvestimento = valoresAnteriores.Id;
@@ -111,14 +116,11 @@ namespace APIFinanceiro.Business.Services
                         var valorRendimentoAtual = saldoAtual * percentRendimento;
                         var valorFinalAtual = valorRendimentoAtual - (valorRendimentoAtual * taxaAdm);
 
-                        var investimentoModel = new InvestimentoModel()
-                        {
-                            IdUsuario = idUsuario,
-                            IdSegmento = idSegmento,
-                            Saldo = saldoAtual,
-                            ValorRendimento = valorRendimentoAtual,
-                            ValorFinal = valorFinalAtual
-                        };
+                        investimentoModel.IdUsuario = idUsuario;
+                        investimentoModel.IdSegmento = idSegmento;
+                        investimentoModel.Saldo = saldoAtual;
+                        investimentoModel.ValorRendimento = valorRendimentoAtual;
+                        investimentoModel.ValorFinal = valorFinalAtual;
 
                         var atualizar = await AtualizarInvestimento(investimentoModel);
 

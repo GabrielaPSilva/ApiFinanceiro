@@ -5,11 +5,13 @@ VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIFinanceiro", "APIFinanceiro\APIFinanceiro.csproj", "{B631B83C-86BA-411A-89D9-70E3E5B50B43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIFinanceiro.Model", "APIFinanceiro.Model\APIFinanceiro.Model.csproj", "{23731CD6-1F97-4D37-A406-0E54F46485B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIFinanceiro.Model", "APIFinanceiro.Model\APIFinanceiro.Model.csproj", "{23731CD6-1F97-4D37-A406-0E54F46485B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIFinanceiro.Business", "APIFinanceiro.Business\APIFinanceiro.Business.csproj", "{4C4E29B3-6AA0-4671-95F3-08A5EA6320D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIFinanceiro.Business", "APIFinanceiro.Business\APIFinanceiro.Business.csproj", "{4C4E29B3-6AA0-4671-95F3-08A5EA6320D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIFinanceiro.Data", "APIFinanceiro.Data\APIFinanceiro.Data.csproj", "{80E36318-E17F-4DF0-9C97-5AEC3C4FDB54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIFinanceiro.Data", "APIFinanceiro.Data\APIFinanceiro.Data.csproj", "{80E36318-E17F-4DF0-9C97-5AEC3C4FDB54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIFinanceiro.Teste", "APIFinanceiro.Teste\APIFinanceiro.Teste.csproj", "{58ADF265-4D7A-448C-9C70-5926CD4E7F70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{80E36318-E17F-4DF0-9C97-5AEC3C4FDB54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80E36318-E17F-4DF0-9C97-5AEC3C4FDB54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80E36318-E17F-4DF0-9C97-5AEC3C4FDB54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58ADF265-4D7A-448C-9C70-5926CD4E7F70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58ADF265-4D7A-448C-9C70-5926CD4E7F70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58ADF265-4D7A-448C-9C70-5926CD4E7F70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58ADF265-4D7A-448C-9C70-5926CD4E7F70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
