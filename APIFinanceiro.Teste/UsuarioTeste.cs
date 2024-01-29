@@ -127,5 +127,44 @@ namespace APIFinanceiro.Teste
             result.Should().BeFalse();
             usuarioRepositoryMock.Verify(repo => repo.AlterarUsuario(It.IsAny<UsuarioModel>()), Times.Never);
         }
+
+        [Fact(DisplayName = "Desativar usuário com sucesso")]
+        [Trait("UsuarioRepository", "DesativarUsuario")]
+        public async Task DesativarUsuario_WithValidIdUsuario_ShouldReturnTrue()
+        {
+            // Arrange
+            var usuarioRepositoryMock = new Mock<IUsuarioRepository>();
+            var usuarioService = new UsuarioService(usuarioRepositoryMock.Object);
+
+            var idUsuarioFaker = new AutoFaker<UsuarioModel>()
+                .RuleFor(fake => fake.Id, fake => fake.Random.Number(1, 1000));
+
+            var idUsuarioFake = idUsuarioFaker.Generate();
+
+            usuarioRepositoryMock.Setup(repo => repo.DesativarUsuario(It.IsAny<int>()))
+                                 .ReturnsAsync(true); 
+
+            // Act
+            var result = await usuarioService.DesativarUsuario(idUsuarioFake.Id);
+
+            // Assert
+            result.Should().BeTrue(); 
+            usuarioRepositoryMock.Verify(repo => repo.DesativarUsuario(It.IsAny<int>()), Times.Once);
+        }
+
+        [Fact(DisplayName = "Desativar usuário com falha")]
+        [Trait("UsuarioRepository", "DesativarUsuario")]
+        public async Task DesativarUsuario_WithInvalidIdUsuario_ShouldReturnFalse()
+        {
+            // Arrange
+            var usuarioRepositoryMock = new Mock<IUsuarioRepository>();
+            var usuarioService = new UsuarioService(usuarioRepositoryMock.Object);
+
+            // Act
+            var result = await usuarioService.DesativarUsuario(0);
+
+            // Assert
+            result.Should().BeFalse(); 
+        }
     }
 }
