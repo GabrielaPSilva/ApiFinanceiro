@@ -38,7 +38,7 @@ namespace APIFinanceiro.Model.Entities
             mensagemErro = string.Empty;
 
             if (!isValid)
-                mensagemErro = "A Descricao deve ter entre 1 e 100 caracteres.\n";
+                mensagemErro = "A descricao deve ter entre 1 e 100 caracteres.\n";
 
             return isValid;
         }

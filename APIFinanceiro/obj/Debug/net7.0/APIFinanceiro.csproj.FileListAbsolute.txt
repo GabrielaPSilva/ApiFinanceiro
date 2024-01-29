@@ -47,3 +47,11 @@ C:\Git\APIFinanceiro\APIFinanceiro\bin\Debug\net7.0\APIFinanceiro.Business.dll
 C:\Git\APIFinanceiro\APIFinanceiro\bin\Debug\net7.0\APIFinanceiro.Model.dll
 C:\Git\APIFinanceiro\APIFinanceiro\bin\Debug\net7.0\APIFinanceiro.Business.pdb
 C:\Git\APIFinanceiro\APIFinanceiro\bin\Debug\net7.0\APIFinanceiro.Model.pdb
+C:\Git\APIFinanceiro\APIFinanceiro\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Git\APIFinanceiro\APIFinanceiro\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Git\APIFinanceiro\APIFinanceiro\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Git\APIFinanceiro\APIFinanceiro\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Git\APIFinanceiro\APIFinanceiro\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Git\APIFinanceiro\APIFinanceiro\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Git\APIFinanceiro\APIFinanceiro\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+C:\Git\APIFinanceiro\APIFinanceiro\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll

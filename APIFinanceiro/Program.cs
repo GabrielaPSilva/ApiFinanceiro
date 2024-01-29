@@ -1,6 +1,9 @@
 using APIFinanceiro.Initializers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,12 +12,25 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-new BusinessInitializer().Initialize(builder.Services);
-new DataInitializer().Initialize(builder.Services);
-new SessionInitializer().Initialize(builder.Services);
-
 builder.Services.AddSwaggerGen(options =>
 {
+    options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        Description = "JWT Authorization header using the Bearer scheme."
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "bearer" }
+            },
+            new string[] {}
+        }
+    });
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
@@ -23,6 +39,21 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+#region [Database]
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+});
+#endregion
+
+#region [DI]
+new BusinessInitializer().Initialize(builder.Services);
+new DataInitializer().Initialize(builder.Services);
+new SessionInitializer().Initialize(builder.Services);
+#endregion
+
+#region [Cors]
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
@@ -33,12 +64,28 @@ builder.Services.AddCors(options =>
                                   .AllowAnyOrigin();
                        });
 });
+#endregion
 
-builder.Services.Configure<ForwardedHeadersOptions>(options =>
-{
-    options.ForwardedHeaders =
-        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-}); 
+#region [JWT]
+builder.Services.AddAuthentication(x =>
+    {
+        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = true;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+                .GetBytes(builder.Configuration.GetSection("TokenManagement:Secret").Value!)),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+#endregion
 
 var app = builder.Build();
 
@@ -67,6 +114,16 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+#region [Cors]
+app.UseCors(c =>
+{
+    c.AllowAnyHeader();
+    c.AllowAnyMethod();
+    c.AllowAnyOrigin();
+
+});
+#endregion
+
 //Recomendado para processar corretamente os cabeçalhos encaminhados
 app.UseForwardedHeaders();
 
@@ -74,6 +131,7 @@ app.UseRouting();
 
 //Configurar autorização na aplicação
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 

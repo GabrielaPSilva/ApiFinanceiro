@@ -70,7 +70,7 @@ namespace APIFinanceiro.Controller
 
                 if (retornoCadastro > 0)
                 {
-                    return Created($"/api/usuario/{risco.Id}", retornoCadastro);
+                    return Created($"/api/risco/{risco.Id}", retornoCadastro);
                 }
 
                 return BadRequest(new { erro = "Erro ao cadastrar risco" });
@@ -96,6 +96,8 @@ namespace APIFinanceiro.Controller
                 {
                     return NotFound(new { erro = "Risco não encontrado" });
                 }
+
+                risco.Descricao = descricao;
 
                 if (await _riscoService.AlterarRisco(risco))
                 {
