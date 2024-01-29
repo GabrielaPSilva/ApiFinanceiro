@@ -20,56 +20,57 @@ namespace APIFinanceiro.Data.Repositories
             _dbSession = dbSession;
         }
 
-        //public async Task<List<ClienteModel>> ListarClientesTelefones()
-        //{
-        //    IDbConnection connection = await _dbSession.GetConnectionAsync("DBCliente");
-        //    string query = @"
-						  //  SELECT 
-	       //                     Users.Id,
-	       //                     Users.Nome,
-	       //                     Users.CPF,
-	       //                     Users.Email,
-	       //                     Segm.Id,
-	       //                     Segm.TipoSegmento,
-	       //                     Segm.PercentualRendimento,
-	       //                     Segm.TaxaAdm,
-	       //                     Segm.MesesVigencia,
-	       //                     Invest.Id,
-	       //                     Invest.Saldo,
-	       //                     Invest.ValorRendimento,
-	       //                     Invest.ValorFinal
-        //                    FROM 
-	       //                     TB_Investimento AS Invest
-		      //                      INNER JOIN TB_Usuario AS Users ON Invest.IdUsuario = Users.Id
-		      //                      INNER JOIN TB_Segmento AS Segm ON Invest.IdSegmento = Segm.Id
-        //                    WHERE
-	       //                     TB_Usuario.CPF = @CPF
-        //                        AND TB_Usuario.Ativo = 1";
+        public async Task<List<UsuarioModel>> ListaInvestimentoPorSegmentoPeloCPFUsuario(string CPF)
+        {
+            IDbConnection connection = await _dbSession.GetConnectionAsync("DBFinanceiro");
+            string query = @"
+						    SELECT 
+	                            Users.Id,
+	                            Users.Nome,
+	                            Users.CPF,
+	                            Users.Email,
+	                            Segm.Id,
+	                            Segm.TipoSegmento,
+	                            Segm.PercentualRendimento,
+	                            Segm.TaxaAdm,
+	                            Segm.MesesVigencia,
+	                            Invest.Id,
+	                            Invest.Saldo,
+	                            Invest.ValorRendimento,
+	                            Invest.ValorFinal
+                            FROM 
+	                            TB_Usuario AS Users
+		                            INNER JOIN TB_Investimento AS Invest ON Users.Id = Invest.IdUsuario
+		                            INNER JOIN TB_Segmento AS Segm ON Invest.IdSegmento = Segm.Id
+                            WHERE
+	                            Users.CPF = @CPF";
 
-        //    var lookupCliente = new Dictionary<int, ClienteModel>();
+            var lookupUsuario = new Dictionary<string, UsuarioModel>();
 
-        //    await connection.QueryAsync<ClienteModel, TelefoneClienteModel, TipoTelefoneModel, ClienteModel>(query,
-        //        (cliente, telefone, tipoTelefone) =>
-        //        {
-        //            if (!lookupCliente.TryGetValue(cliente.Id, out var clienteExistente))
-        //            {
-        //                clienteExistente = cliente;
-        //                lookupCliente.Add(cliente.Id, clienteExistente);
-        //            }
+            await connection.QueryAsync<UsuarioModel, InvestimentoModel, SegmentoModel, UsuarioModel>(query,
+                (usuario, investimento, segmento) =>
+                {
+                    if (!lookupUsuario.TryGetValue(usuario.CPF!, out var usuarioExiste))
+                    {
+                        usuarioExiste = usuario;
+                        lookupUsuario.Add(usuario.CPF!, usuarioExiste);
+                    }
 
-        //            clienteExistente.ListaTelefones ??= new List<TelefoneClienteModel>();
+                    usuarioExiste.ListaInvestimento ??= new List<InvestimentoModel>();
 
-        //            if (telefone != null)
-        //            {
-        //                telefone.TipoTelefone = tipoTelefone;
-        //                clienteExistente.ListaTelefones.Add(telefone);
-        //            }
+                    if (investimento != null)
+                    {
+                        investimento.Segmento = segmento;
+                        usuarioExiste.ListaInvestimento.Add(investimento);
+                    }
 
-        //            return null!;
+                    return null!;
 
-        //        }, splitOn: "Id");
+                },
+                new { CPF },
+                splitOn: "Id");
 
-        //    return lookupCliente.Values.ToList();
-        //}
+            return lookupUsuario.Values.ToList();
+        }
     }
 }

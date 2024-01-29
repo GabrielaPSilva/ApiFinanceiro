@@ -14,5 +14,7 @@ namespace APIFinanceiro.Model.Entities
         public Decimal Saldo { get; set; }
         public Decimal ValorRendimento { get; set; }
         public Decimal ValorFinal { get; set; }
+
+        public SegmentoModel? Segmento { get; set; }
     }
 }

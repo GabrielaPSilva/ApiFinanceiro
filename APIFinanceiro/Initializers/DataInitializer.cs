@@ -11,6 +11,7 @@ namespace APIFinanceiro.Initializers
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
             services.AddTransient<IRiscoRepository, RiscoRepository>();
             services.AddTransient<ISegmentoRepository, SegmentoRepository>();
+            services.AddTransient<IInvestimentoRepository, InvestimentoRepository>();
         }
     }
 }

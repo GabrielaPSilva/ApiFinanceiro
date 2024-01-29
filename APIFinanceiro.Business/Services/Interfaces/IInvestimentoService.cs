@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APIFinanceiro.Data.Repositories.Interfaces
+namespace APIFinanceiro.Business.Services.Interfaces
 {
-    public interface IInvestimentoRepository
+    public interface IInvestimentoService
     {
         Task<List<UsuarioModel>> ListaInvestimentoPorSegmentoPeloCPFUsuario(string CPF);
     }

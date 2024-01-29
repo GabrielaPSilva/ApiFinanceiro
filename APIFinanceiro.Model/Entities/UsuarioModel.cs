@@ -20,6 +20,7 @@ namespace APIFinanceiro.Model.Entities
         public string? DataNascimento { get; set; }
         public bool Ativo { get; set; }
 
+        public List<InvestimentoModel>? ListaInvestimento { get; set; }
         public RiscoModel? Risco { get; set; }
 
         public bool IsValid(out string mensagemErro)
