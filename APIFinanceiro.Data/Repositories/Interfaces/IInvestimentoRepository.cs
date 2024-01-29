@@ -10,5 +10,10 @@ namespace APIFinanceiro.Data.Repositories.Interfaces
     public interface IInvestimentoRepository
     {
         Task<List<UsuarioModel>> ListaInvestimentoPorSegmentoPeloCPFUsuario(string CPF);
+        Task<InvestimentoModel> RetornaInvestimentoUsuarioSegmento(int idUsuario, int idSegmento);
+        Task<int> Aplicar(AplicacaoModel aplicacao);
+        Task<int> Resgatar(ResgateModel resgate);
+        Task<int> CadastroInvestimento(InvestimentoModel investimento);
+        Task<bool> AtualizarInvestimento(InvestimentoModel invesimento);
     }
 }

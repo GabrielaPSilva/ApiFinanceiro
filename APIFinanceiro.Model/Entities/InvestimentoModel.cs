@@ -16,6 +16,8 @@ namespace APIFinanceiro.Model.Entities
         public Decimal ValorFinal { get; set; }
 
         public SegmentoModel? Segmento { get; set; }
+        public AplicacaoModel? Aplicacao { get; set; }
+        public ResgateModel? Resgate { get; set; }
 
         public bool IsValid(out string mensagemErro)
         {

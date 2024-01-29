@@ -89,6 +89,21 @@ namespace APIFinanceiro.Data.Repositories
             return lookupSegmento.Values.ToList();
         }
 
+        public async Task<SegmentoModel> RetornaSegmentoIdSegmento(int idSegmento)
+        {
+            IDbConnection connection = await _dbSession.GetConnectionAsync("DBFinanceiro");
+
+            string query = @"
+						     SELECT
+							     *
+						     FROM
+							     TB_Segmento
+						     WHERE
+                                Id = @Id";
+
+            return await connection.QueryFirstOrDefaultAsync<SegmentoModel>(query, new { Id = idSegmento });
+        }
+
         public async Task<SegmentoModel> RetornarSegmentoTipoSegmentoIdRisco(string tipoSegmento, int idRisco)
         {
             IDbConnection connection = await _dbSession.GetConnectionAsync("DBFinanceiro");

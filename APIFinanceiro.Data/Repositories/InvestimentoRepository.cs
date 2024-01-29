@@ -72,5 +72,138 @@ namespace APIFinanceiro.Data.Repositories
 
             return lookupUsuario.Values.ToList();
         }
+
+        public async Task<InvestimentoModel> RetornaInvestimentoUsuarioSegmento(int idUsuario, int idSegmento)
+        {
+            IDbConnection connection = await _dbSession.GetConnectionAsync("DBFinanceiro");
+
+            string query = @"
+						    SELECT
+	                            *
+                            FROM
+                                TB_Investimento
+                            WHERE
+	                            IdUsuario = @IdUsuario
+                                AND IdSegmento = @IdSegmento";
+
+            return await connection.QueryFirstOrDefaultAsync<InvestimentoModel>(query,
+                new
+                { 
+                    IdUsuario = idUsuario, 
+                    IdSegmento = idSegmento 
+                });
+        }
+
+        public async Task<int> Aplicar(AplicacaoModel aplicacao)
+        {
+            IDbConnection connection = await _dbSession.GetConnectionAsync("DBFinanceiro");
+
+            string query = @"
+						    INSERT INTO TB_Aplicacao
+							    (IdInvestimento, Valor, DataAplicacao)
+						    VALUES
+							    (@IdInvestimento, @Valor, @DataAplicacao);
+                            SELECT SCOPE_IDENTITY()";
+
+            using (var transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    aplicacao.Id = await connection.QueryFirstOrDefaultAsync<int>(query, aplicacao, transaction: transaction);
+                    transaction.Commit();
+                    return aplicacao.Id;
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    return 0;
+                }
+            }
+        }
+
+        public async Task<int> Resgatar(ResgateModel resgate)
+        {
+            IDbConnection connection = await _dbSession.GetConnectionAsync("DBFinanceiro");
+
+            string query = @"
+						    INSERT INTO TB_Resgate
+							    (IdInvestimento, Valor, DataResgate)
+						    VALUES
+							    (@IdInvestimento, @Valor, @DataResgate);
+                            SELECT SCOPE_IDENTITY()";
+
+            using (var transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    resgate.Id = await connection.QueryFirstOrDefaultAsync<int>(query, resgate, transaction: transaction);
+                    transaction.Commit();
+                    return resgate.Id;
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    return 0;
+                }
+            }
+        }
+
+        public async Task<int> CadastroInvestimento(InvestimentoModel investimento)
+        {
+            IDbConnection connection = await _dbSession.GetConnectionAsync("DBFinanceiro");
+
+            string query = @"
+						    INSERT INTO TB_Investimento
+							    (IdUsuario, IdSegmento, Saldo, ValorRendimento, ValorFinal)
+						    VALUES
+							    (@IdUsuario, @IdSegmento, 0, 0, 0);
+                            SELECT SCOPE_IDENTITY()";
+
+            using (var transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    investimento.Id = await connection.QueryFirstOrDefaultAsync<int>(query, investimento, transaction: transaction);
+                    transaction.Commit();
+                    return investimento.Id;
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    return 0;
+                }
+            }
+        }
+
+        public async Task<bool> AtualizarInvestimento(InvestimentoModel invesimento)
+        {
+            IDbConnection connection = await _dbSession.GetConnectionAsync("DBFinanceiro");
+            string query = @"
+						    UPDATE
+							    TB_Investimento
+						    SET
+							    IdUsuario = @IdUsuario,
+                                IdSegmento = @IdSegmento,
+                                Saldo = @Saldo,
+                                ValorRendimento = @ValorRendimento,
+                                ValorFinal = @ValorFinal
+						    WHERE
+							    Id = @Id";
+
+            using (var transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    var retorno = await connection.ExecuteAsync(query, invesimento, transaction: transaction) > 0;
+                    transaction.Commit();
+                    return retorno;
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
+        }
     }
 }

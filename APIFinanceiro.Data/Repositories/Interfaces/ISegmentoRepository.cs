@@ -12,6 +12,7 @@ namespace APIFinanceiro.Data.Repositories.Interfaces
         Task<List<SegmentoModel>> ListarSegmento();
         Task<List<SegmentoModel>> RetornarSegmentoTipoSegmento(string tipoSegmento);
         Task<SegmentoModel> RetornarSegmentoTipoSegmentoIdRisco(string tipoSegmento, int idRisco);
+        Task<SegmentoModel> RetornaSegmentoIdSegmento(int idSegmento);
         Task<int> CadastrarSegmento(SegmentoModel segmento);
         Task<bool> AlterarSegmento(SegmentoModel segmento);
         Task<bool> RemoverSegmento(int idSegmento);

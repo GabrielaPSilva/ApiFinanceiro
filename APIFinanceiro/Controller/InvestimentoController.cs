@@ -1,4 +1,5 @@
-﻿using APIFinanceiro.Business.Services.Interfaces;
+﻿using APIFinanceiro.Business.Services;
+using APIFinanceiro.Business.Services.Interfaces;
 using APIFinanceiro.Model.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ namespace APIFinanceiro.Controller
             _investimentoService = investimentoService;
         }
 
-        [HttpGet("{CPF}")]
+        [HttpGet("CPF/{CPF}")]
         public async Task<IActionResult> ListarInvestimentosPorSegmentoPeloCPFUsuario(string CPF)
         {
             try
@@ -35,5 +36,54 @@ namespace APIFinanceiro.Controller
             }
         }
 
+        [HttpPut("aplicacao/idUsuario/{idUsuario}/idSegmento/{idSegmento}")]
+        public async Task<IActionResult> InserirAtualizarAplicacao(int idUsuario, int idSegmento, [FromBody] AplicacaoModel aplicacao)
+        {
+            try
+            {
+                if (!aplicacao.IsValid(out string mensagemErro))
+                {
+                    return BadRequest(new { erro = mensagemErro });
+                }
+
+                var retorno = await _investimentoService.Aplicar(aplicacao, idUsuario, idSegmento);
+
+                if (retorno != null)
+                {
+                    return Ok(retorno);
+                }
+
+                return BadRequest(new { erro = "Erro realizar aplicacação" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPut("resgate/idUsuario/{idUsuario}/idSegmento/{idSegmento}")]
+        public async Task<IActionResult> InserirAtualizarResgate(int idUsuario, int idSegmento, [FromBody] ResgateModel resgate)
+        {
+            try
+            {
+                if (!resgate.IsValid(out string mensagemErro))
+                {
+                    return BadRequest(new { erro = mensagemErro });
+                }
+
+                var retorno = await _investimentoService.Resgatar(resgate, idUsuario, idSegmento);
+
+                if (retorno != null)
+                {
+                    return Ok(retorno);
+                }
+
+                return BadRequest(new { erro = "Erro realizar aplicacação" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }

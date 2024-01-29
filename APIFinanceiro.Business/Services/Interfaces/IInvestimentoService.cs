@@ -10,5 +10,9 @@ namespace APIFinanceiro.Business.Services.Interfaces
     public interface IInvestimentoService
     {
         Task<List<UsuarioModel>> ListaInvestimentoPorSegmentoPeloCPFUsuario(string CPF);
+        Task<InvestimentoModel> RetornaInvestimentoUsuarioSegmento(int idUsuario, int idSegmento);
+        Task<InvestimentoModel> Aplicar(AplicacaoModel aplicacao, int idUsuario, int idSegmento);
+        Task<InvestimentoModel> Resgatar(ResgateModel resgate, int idUsuario, int idSegmento);
+        Task<bool> AtualizarInvestimento(InvestimentoModel investimento);
     }
 }
