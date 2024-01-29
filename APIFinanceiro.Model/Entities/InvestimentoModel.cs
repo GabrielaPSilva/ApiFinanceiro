@@ -52,7 +52,7 @@ namespace APIFinanceiro.Model.Entities
 
             if (!isValidValorRendimento)
             {
-                mensagemErro = "O Valor de rendimento deve ser um decimal.\n");
+                mensagemErro = "O Valor de rendimento deve ser um decimal.\n";
                 return isValidValorRendimento;
             }
 
