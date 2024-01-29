@@ -70,3 +70,14 @@ CREATE TABLE TB_Resgate (
 	CONSTRAINT FK_TBResgate_TBInvestimento FOREIGN KEY (IdInvestimento) REFERENCES TB_Investimento(Id)
 );
 GO
+
+DROP TABLE TB_Usuario_Permissao 
+CREATE TABLE TB_Usuario_Permissao (
+	Id INT IDENTITY(1,1) PRIMARY KEY,
+	Nome VARCHAR(100) NOT NULL,
+	Senha VARCHAR(100) NOT NULL,
+	Permissao INT NOT NULL,
+);
+GO
+
+INSERT INTO TB_Usuario_Permissao VALUES ('Admin', '12345', 1)

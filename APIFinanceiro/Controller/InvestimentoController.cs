@@ -78,7 +78,7 @@ namespace APIFinanceiro.Controller
                     return Ok(retorno);
                 }
 
-                return BadRequest(new { erro = "Erro realizar aplicacação" });
+                return BadRequest(new { erro = "Erro realizar resgate" });
             }
             catch (Exception ex)
             {

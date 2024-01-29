@@ -1,5 +1,7 @@
 ﻿using APIFinanceiro.Business.Services.Interfaces;
+using APIFinanceiro.Data.Repositories.Interfaces;
 using APIFinanceiro.Model;
+using APIFinanceiro.Model.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,19 @@ namespace APIFinanceiro.Business.Services
 {
     public class AutenticacaoService : IAutenticacaoService
     {
-        public string GerarToken(UserInfoModel user)
+        private readonly IAutenticacaoRepository _autenticationRepository;
+
+        public AutenticacaoService(IAutenticacaoRepository autenticationRepository)
+        {
+            _autenticationRepository = autenticationRepository;
+        }
+
+        public async Task<UsuarioPermissaoModel> ObterUsuarioNomeSenha(string nome, string senha)
+        {
+            return await _autenticationRepository.ObterUsuarioNomeSenha(nome, senha);
+        }
+
+        public string GerarToken(UsuarioPermissaoModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes("TokenManagement:Secret");
@@ -23,7 +37,8 @@ namespace APIFinanceiro.Business.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Nome!),
-                    new Claim(ClaimTypes.Role, user.Senha!)
+                    new Claim(ClaimTypes.Role, user.Permissao.ToString()!),
+                    new Claim("Id", user.Id.ToString()!)
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

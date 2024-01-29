@@ -16,30 +16,25 @@ namespace APIFinanceiro.Controller
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login([FromBody] UserInfoModel user)
+        public IActionResult Login([FromBody] UsuarioPermissaoModel user)
         {
-            bool resultado = ValidarUsuario(user);
-            if (resultado)
-            {
-                var tokenString = _authorizationService.GerarToken(user);
-                return Ok(new { token = tokenString });
-            }
-            else
-            {
-                return Unauthorized();
-            }
-        }
+            var usuario = _authorizationService.ObterUsuarioNomeSenha(user.Nome, user.Senha);
 
-        private bool ValidarUsuario(UserInfoModel user)
-        {
-            if (user.Nome == "admin" && user.Senha == "123456")
+            if (usuario == null)
             {
-                return true;
+                return NotFound(new { erro = "Usuário e/ou senha inválidos" });
             }
-            else
+
+            var tokenString = _authorizationService.GerarToken(user);
+
+            if (tokenString != null)
             {
-                return false;
+                user.Senha = string.Empty;
+
+                return Ok(new { usuario = user.Nome, token = tokenString });
             }
+
+            return Unauthorized();
         }
     }
 }

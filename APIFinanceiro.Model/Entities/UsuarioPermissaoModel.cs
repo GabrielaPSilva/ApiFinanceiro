@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace APIFinanceiro.Model
 {
-    public class UserInfoModel
+    public class UsuarioPermissaoModel
     {
+        public int Id { get; set; }
         public string? Nome { get; set; }
         public string? Senha { get; set; }
 

@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APIFinanceiro.Business.Services.Interfaces
+namespace APIFinanceiro.Data.Repositories.Interfaces
 {
-    public interface IAutenticacaoService
+    public interface IAutenticacaoRepository
     {
         Task<UsuarioPermissaoModel> ObterUsuarioNomeSenha(string nome, string senha);
-        string GerarToken(UsuarioPermissaoModel user);
     }
 }

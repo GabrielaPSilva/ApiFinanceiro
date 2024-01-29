@@ -52,13 +52,13 @@ namespace APIFinanceiro.Business.Services
 
                         if (aplicar != 0)
                         {
-                            var valoresAnteriores = RetornaInvestimentoUsuarioSegmento(idUsuario, idSegmento);
+                            var valoresAnteriores = await RetornaInvestimentoUsuarioSegmento(idUsuario, idSegmento);
 
-                            var saldoAnterior = valoresAnteriores.Result.Saldo;
+                            var saldoAnterior = valoresAnteriores.Saldo;
 
-                            var segmento = _segmentoRepository.RetornaSegmentoIdSegmento(idSegmento);
+                            var segmento = await _segmentoRepository.RetornaSegmentoIdSegmento(idSegmento);
 
-                            var percentRendimento = segmento.Result.PercentualRendimento;
+                            var percentRendimento = segmento.PercentualRendimento;
 
                             var saldoAtual = saldoAnterior + aplicacao.Valor;
                             var valorRendimentoAtual = saldoAtual * percentRendimento;
@@ -90,22 +90,22 @@ namespace APIFinanceiro.Business.Services
         {
             if (resgate != null)
             {
+                var valoresAnteriores = await RetornaInvestimentoUsuarioSegmento(idUsuario, idSegmento);
+
+                resgate.IdInvestimento = valoresAnteriores.Id;
+
                 try
                 {
-                    var valoresAnteriores = RetornaInvestimentoUsuarioSegmento(idUsuario, idSegmento);
-
-                    resgate.IdInvestimento = valoresAnteriores.Id;
-
                     var resgatar = await _investimentoRepository.Resgatar(resgate);
 
                     if (resgatar != 0)
                     {
-                        var saldoAnterior = valoresAnteriores.Result.Saldo;
+                        var saldoAnterior = valoresAnteriores.Saldo;
 
-                        var segmento = _segmentoRepository.RetornaSegmentoIdSegmento(idSegmento);
+                        var segmento = await _segmentoRepository.RetornaSegmentoIdSegmento(idSegmento);
 
-                        var percentRendimento = segmento.Result.PercentualRendimento;
-                        var taxaAdm = segmento.Result.TaxaAdm;
+                        var percentRendimento = segmento.PercentualRendimento;
+                        var taxaAdm = segmento.TaxaAdm;
 
                         var saldoAtual = saldoAnterior - resgate.Valor;
                         var valorRendimentoAtual = saldoAtual * percentRendimento;
