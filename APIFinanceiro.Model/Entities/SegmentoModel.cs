@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace APIFinanceiro.Model.Entities
 {
@@ -30,6 +32,18 @@ namespace APIFinanceiro.Model.Entities
             isValid = isValid && ValidarTipoSegmento(out mensagemErroNome);
             sbMensagemErro.Append(mensagemErroNome);
 
+            string mensagemErroPercentual = string.Empty;
+            isValid = isValid && ValidarPercentualRendimento(out mensagemErroPercentual);
+            sbMensagemErro.Append(mensagemErroPercentual);
+
+            string mensagemErroTaxaAdm = string.Empty;
+            isValid = isValid && ValidarTaxaAdm(out mensagemErroTaxaAdm);
+            sbMensagemErro.Append(mensagemErroTaxaAdm);
+
+            string mensagemErroMesesVigencia = string.Empty;
+            isValid = isValid && ValidarMesesVigencia(out mensagemErroMesesVigencia);
+            sbMensagemErro.Append(mensagemErroMesesVigencia);
+
             mensagemErro = sbMensagemErro.ToString();
 
             return isValid;
@@ -49,5 +63,44 @@ namespace APIFinanceiro.Model.Entities
 
             return isValid;
         }
+
+        private bool ValidarPercentualRendimento(out string mensagemErro)
+        {
+            bool isValid = true;
+            isValid = PercentualRendimento!.GetType() == typeof(decimal);
+
+            mensagemErro = string.Empty;
+
+            if (!isValid)
+                mensagemErro = "O percentual de rendimento deve ser um decimal.\n";
+
+            return isValid;
+        }
+
+        private bool ValidarTaxaAdm(out string mensagemErro)
+        {
+            bool isValid = true;
+            isValid = TaxaAdm!.GetType() == typeof(decimal);
+
+            mensagemErro = string.Empty;
+
+            if (!isValid)
+                mensagemErro = "A taxa de administração deve ser um decimal.\n";
+
+            return isValid;
+        }
+        private bool ValidarMesesVigencia(out string mensagemErro)
+        {
+            bool isValid = true;
+            isValid = MesesVigencia!.GetType() == typeof(int);
+
+            mensagemErro = string.Empty;
+
+            if (!isValid)
+                mensagemErro = "Os Meses de vigência deve ser um inteiro.\n";
+
+            return isValid;
+        }
+
     }
 }
