@@ -9,10 +9,11 @@ namespace APIFinanceiro.Controller
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioService _usuarioService;
-
-        public UsuarioController(IUsuarioService usuarioService)
+        private readonly ILogger<UsuarioController> _logger;
+        public UsuarioController(IUsuarioService usuarioService, ILogger<UsuarioController> logger)
         {
             _usuarioService = usuarioService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -24,6 +25,7 @@ namespace APIFinanceiro.Controller
 
                 if (listaUsuarios == null || listaUsuarios.Count() == 0)
                 {
+                    _logger.LogInformation("Lista de usuários não encontrada");
                     return NotFound(new { erro = "Lista de usuários não encontrada" });
                 }
 
@@ -31,6 +33,7 @@ namespace APIFinanceiro.Controller
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Status 500, erro de servidor");
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -44,13 +47,16 @@ namespace APIFinanceiro.Controller
 
                 if (usuario == null)
                 {
+                    _logger.LogInformation("Usuário não encontrado");
                     return NotFound(new { erro = "Usuário não encontrado" });
                 }
 
+                _logger.LogInformation("Usuário retornado.");
                 return Ok(usuario);
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Status 500, erro de servidor");
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -62,6 +68,7 @@ namespace APIFinanceiro.Controller
             {
                 if (!usuario.IsValid(out string mensagemErro))
                 {
+                    _logger.LogError(mensagemErro);
                     return BadRequest(new { erro = mensagemErro });
                 }
 
@@ -69,13 +76,15 @@ namespace APIFinanceiro.Controller
 
                 if (retornoCadastro > 0)
                 {
+                    _logger.LogInformation("Usuário cadastrado.");
                     return Created($"/api/usuario/{usuario.Id}", retornoCadastro);
                 }
-
+                _logger.LogError("Erro ao cadastrar o usuário");
                 return BadRequest(new { erro = "Erro ao cadastrar o usuário" });
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Status 500, erro de servidor");
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -87,11 +96,13 @@ namespace APIFinanceiro.Controller
             {
                 if (!usuario.IsValid(out string mensagemErro))
                 {
+                    _logger.LogError(mensagemErro);
                     return BadRequest(new { erro = mensagemErro });
                 }
 
                 if (await _usuarioService.RetornarUsuarioCPF(CPF) == null)
                 {
+                    _logger.LogInformation("Usuário não encontrado");
                     return NotFound(new { erro = "Usuário não encontrado" });
                 }
 
@@ -99,13 +110,16 @@ namespace APIFinanceiro.Controller
 
                 if (await _usuarioService.AlterarUsuario(usuario))
                 {
+                    _logger.LogInformation("Usuário alterado.");
                     return Ok(usuario);
                 }
 
+                _logger.LogError("Erro ao alterar usuário");
                 return BadRequest(new { erro = "Erro ao alterar o usuário" });
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Status 500, erro de servidor");
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -119,6 +133,7 @@ namespace APIFinanceiro.Controller
 
                 if (retornarUsuario == null)
                 {
+                    _logger.LogInformation("Usuário não encontrado");
                     return NotFound(new { erro = "Usuário não encontrado" });
                 }
 
@@ -126,13 +141,15 @@ namespace APIFinanceiro.Controller
 
                 if (await _usuarioService.DesativarUsuario(idUsuario))
                 {
+                    _logger.LogInformation("Usuário desativado");
                     return NoContent();
                 }
-
+                _logger.LogError("Erro ao deletar usuário");
                 return BadRequest(new { erro = "Erro ao deletar usuário" });
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Status 500, erro de servidor");
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
