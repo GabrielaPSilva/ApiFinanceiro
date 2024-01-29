@@ -10,7 +10,8 @@ namespace APIFinanceiro.Business.Services.Interfaces
     public interface ISegmentoService
     {
         Task<List<SegmentoModel>> ListarSegmento();
-        Task<SegmentoModel> RetornarSegmentoTipoSegmento(string TipoSegmento);
+        Task<List<SegmentoModel>> RetornarSegmentoTipoSegmento(string tipoSegmento);
+        Task<SegmentoModel> RetornarSegmentoTipoSegmentoIdRisco(string tipoSegmento, int idRisco);
         Task<int> CadastrarSegmento(SegmentoModel segmento);
         Task<bool> AlterarSegmento(SegmentoModel segmento);
         Task<bool> RemoverSegmento(int idSegmento);

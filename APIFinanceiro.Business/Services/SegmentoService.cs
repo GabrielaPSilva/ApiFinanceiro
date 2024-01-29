@@ -1,5 +1,6 @@
 ﻿using APIFinanceiro.Business.Services.Interfaces;
 using APIFinanceiro.Data.DatabaseConnection.Interfaces;
+using APIFinanceiro.Data.Repositories;
 using APIFinanceiro.Data.Repositories.Interfaces;
 using APIFinanceiro.Model.Entities;
 using System;
@@ -24,9 +25,14 @@ namespace APIFinanceiro.Business.Services
             return await _segmentoRepository.ListarSegmento();
         }
 
-        public async Task<SegmentoModel> RetornarSegmentoTipoSegmento(string TipoSegmento)
+        public async Task<List<SegmentoModel>> RetornarSegmentoTipoSegmento(string tipoSegmento)
         {
-            return await _segmentoRepository.RetornarSegmentoTipoSegmento(TipoSegmento);
+            return await _segmentoRepository.RetornarSegmentoTipoSegmento(tipoSegmento);
+        }
+
+        public async Task<SegmentoModel> RetornarSegmentoTipoSegmentoIdRisco(string tipoSegmento, int idRisco)
+        {
+            return await _segmentoRepository.RetornarSegmentoTipoSegmentoIdRisco(tipoSegmento, idRisco);
         }
 
         public async Task<int> CadastrarSegmento(SegmentoModel segmento)

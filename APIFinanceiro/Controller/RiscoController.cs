@@ -36,7 +36,7 @@ namespace APIFinanceiro.Controller
             }
         }
 
-        [HttpGet("{descricao}")]
+        [HttpGet("descricao/{descricao}")]
         public async Task<IActionResult> RetornarRiscoDescricao(string descricao)
         {
             try
@@ -82,7 +82,7 @@ namespace APIFinanceiro.Controller
         }
 
 
-        [HttpPut("{descricao}")]
+        [HttpPut("descricao/{descricao}")]
         public async Task<IActionResult> AlterarRisco(string descricao, [FromBody] RiscoModel risco)
         {
             try

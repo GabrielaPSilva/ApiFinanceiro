@@ -35,7 +35,7 @@ namespace APIFinanceiro.Controller
             }
         }
 
-        [HttpGet("{CPF}")]
+        [HttpGet("CPF/{CPF}")]
         public async Task<IActionResult> RetornarUsuárioCPF(string CPF)
         {
             try
@@ -80,7 +80,7 @@ namespace APIFinanceiro.Controller
             }
         }
 
-        [HttpPut("{CPF}")]
+        [HttpPut("CPF/{CPF}")]
         public async Task<IActionResult> Alterar(string CPF, [FromBody] UsuarioModel usuario)
         {
             try
@@ -110,7 +110,7 @@ namespace APIFinanceiro.Controller
             }
         }
 
-        [HttpDelete("{CPF}")]
+        [HttpDelete("CPF/{CPF}")]
         public async Task<IActionResult> Deletar(string CPF)
         {
             try

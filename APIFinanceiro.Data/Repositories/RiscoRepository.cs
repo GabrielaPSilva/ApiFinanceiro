@@ -45,7 +45,7 @@ namespace APIFinanceiro.Data.Repositories
 						     FROM
 							     TB_Risco
 						     WHERE
-                                 Descricao = @Descricao";
+                                Descricao LIKE '%' + @Descricao + '%'";
 
             return await connection.QueryFirstOrDefaultAsync<RiscoModel>(query, new { Descricao = descricao});
         }

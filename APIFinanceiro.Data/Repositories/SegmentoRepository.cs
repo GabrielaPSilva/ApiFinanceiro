@@ -25,29 +25,97 @@ namespace APIFinanceiro.Data.Repositories
             IDbConnection connection = await _dbSession.GetConnectionAsync("DBFinanceiro");
 
             string query = @"
-						    SELECT
-							    *
-						    FROM
-							    TB_Segmento
+						    SELECT 
+	                            *
+                            FROM
+	                            TB_Segmento AS Segm
+		                            INNER JOIN TB_Risco AS Risc ON
+			                            Segm.IdRisco = Risc.Id
                             ORDER BY
-                                TipoSegmento";
+                                Segm.TipoSegmento";
 
-            return (await connection.QueryAsync<SegmentoModel>(query)).ToList();
+            var lookupSegmento = new Dictionary<int, SegmentoModel>();
+
+            await connection.QueryAsync<SegmentoModel, RiscoModel, SegmentoModel>(query,
+                (segmento, risco) =>
+                {
+                    if (!lookupSegmento.TryGetValue(segmento.Id, out var segmentoExistente))
+                    {
+                        segmentoExistente = segmento;
+                        lookupSegmento.Add(segmento.Id, segmentoExistente);
+                    }
+
+                    segmentoExistente.Risco = risco;
+
+                    return null!;
+                },
+                splitOn: "Id");
+
+            return lookupSegmento.Values.ToList();
         }
 
-        public async Task<SegmentoModel> RetornarSegmentoTipoSegmento(string tipoSegmento)
+        public async Task<List<SegmentoModel>> RetornarSegmentoTipoSegmento(string tipoSegmento)
         {
             IDbConnection connection = await _dbSession.GetConnectionAsync("DBFinanceiro");
 
             string query = @"
-						     SELECT
-							     *
-						     FROM
-							     TB_Segmento
+						     SELECT 
+	                            *
+                             FROM
+	                            TB_Segmento AS Segm
+		                            INNER JOIN TB_Risco AS Risc ON
+			                            Segm.IdRisco = Risc.Id
 						     WHERE
-                                 TipoSegmento = @TipoSegmento";
+                                Segm.TipoSegmento LIKE '%' + @TipoSegmento + '%'";
 
-            return await connection.QueryFirstOrDefaultAsync<SegmentoModel>(query, new { TipoSegmento = tipoSegmento });
+            var lookupSegmento = new Dictionary<int, SegmentoModel>();
+
+            await connection.QueryAsync<SegmentoModel, RiscoModel, SegmentoModel>(query,
+                (segmento, risco) =>
+                {
+                    if (!lookupSegmento.TryGetValue(segmento.Id, out var segmentoExistente))
+                    {
+                        segmentoExistente = segmento;
+                        lookupSegmento.Add(segmento.Id, segmentoExistente);
+                    }
+
+                    segmentoExistente.Risco = risco;
+
+                    return null!;
+                },
+                new { TipoSegmento = tipoSegmento },
+                splitOn: "Id");
+
+            return lookupSegmento.Values.ToList();
+        }
+
+        public async Task<SegmentoModel> RetornarSegmentoTipoSegmentoIdRisco(string tipoSegmento, int idRisco)
+        {
+            IDbConnection connection = await _dbSession.GetConnectionAsync("DBFinanceiro");
+
+            string query = @"
+						     SELECT 
+	                            *
+                             FROM
+	                            TB_Segmento AS Segm
+		                            INNER JOIN TB_Risco AS Risc ON
+			                            Segm.IdRisco = Risc.Id
+						     WHERE
+                                 Segm.TipoSegmento LIKE '%' + @TipoSegmento + '%'
+                                 AND Segm.IdRisco = @IdRisco";
+
+            return (await connection.QueryAsync<SegmentoModel, RiscoModel, SegmentoModel>(query,
+                      (segmento, risco) =>
+                      {
+                          segmento.Risco = risco;
+                          return segmento;
+                      },
+                      new
+                      {
+                          TipoSegmento = tipoSegmento,
+                          IdRisco = idRisco
+                      },
+                      splitOn: "Id")).FirstOrDefault()!;
         }
 
         public async Task<int> CadastrarSegmento(SegmentoModel segmento)
