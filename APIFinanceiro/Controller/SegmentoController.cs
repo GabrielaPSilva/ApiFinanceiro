@@ -100,8 +100,8 @@ namespace APIFinanceiro.Controller
             }
         }
 
-        [HttpPut("tipoSegmento/{tipoSegmento}")]
-        public async Task<IActionResult> AlterarSegmento(string tipoSegmento, [FromBody] SegmentoModel segmento)
+        [HttpPut("idSegmento/{idSegmento}")]
+        public async Task<IActionResult> AlterarSegmento(int idSegmento, [FromBody] SegmentoModel segmento)
         {
             try
             {
@@ -110,14 +110,24 @@ namespace APIFinanceiro.Controller
                     return BadRequest(new { erro = mensagemErro });
                 }
 
-                if (await _segmentoService.RetornarSegmentoTipoSegmento(tipoSegmento) == null)
+                var retorno = await _segmentoService.RetornaSegmentoIdSegmento(idSegmento);
+
+                if (retorno == null)
                 {
                     return NotFound(new { erro = "Segmento não encontrado" });
                 }
 
-                segmento.TipoSegmento = tipoSegmento;
+                var segmentoModel = new SegmentoModel()
+                {
+                    Id = retorno.Id,
+                    IdRisco = segmento.IdRisco,
+                    PercentualRendimento = segmento.PercentualRendimento,
+                    MesesVigencia = segmento.MesesVigencia,
+                    TipoSegmento = segmento.TipoSegmento,
+                    TaxaAdm = segmento.TaxaAdm
+                };
 
-                if (await _segmentoService.AlterarSegmento(segmento))
+                if (await _segmentoService.AlterarSegmento(segmentoModel))
                 {
                     return Ok(segmento);
                 }

@@ -30,6 +30,11 @@ namespace APIFinanceiro.Business.Services
             return await _segmentoRepository.RetornarSegmentoTipoSegmento(tipoSegmento);
         }
 
+        public async Task<SegmentoModel> RetornaSegmentoIdSegmento(int idSegmento)
+        {
+            return await _segmentoRepository.RetornaSegmentoIdSegmento(idSegmento);
+        }
+
         public async Task<SegmentoModel> RetornarSegmentoTipoSegmentoIdRisco(string tipoSegmento, int idRisco)
         {
             return await _segmentoRepository.RetornarSegmentoTipoSegmentoIdRisco(tipoSegmento, idRisco);

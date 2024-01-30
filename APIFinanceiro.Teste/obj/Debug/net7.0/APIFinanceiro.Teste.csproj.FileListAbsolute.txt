@@ -131,3 +131,4 @@ C:\Git\APIFinanceiro\APIFinanceiro.Teste\obj\Debug\net7.0\refint\APIFinanceiro.T
 C:\Git\APIFinanceiro\APIFinanceiro.Teste\obj\Debug\net7.0\APIFinanceiro.Teste.pdb
 C:\Git\APIFinanceiro\APIFinanceiro.Teste\obj\Debug\net7.0\APIFinanceiro.Teste.genruntimeconfig.cache
 C:\Git\APIFinanceiro\APIFinanceiro.Teste\obj\Debug\net7.0\ref\APIFinanceiro.Teste.dll
+C:\Git\APIFinanceiro\APIFinanceiro.Teste\bin\Debug\net7.0\Microsoft.Extensions.Configuration.dll
