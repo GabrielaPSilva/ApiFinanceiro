@@ -2,6 +2,7 @@
 using APIFinanceiro.Data.Repositories.Interfaces;
 using APIFinanceiro.Model;
 using APIFinanceiro.Model.Entities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace APIFinanceiro.Business.Services
     public class AutenticacaoService : IAutenticacaoService
     {
         private readonly IAutenticacaoRepository _autenticationRepository;
+        private readonly IConfiguration _config;
 
         public AutenticacaoService(IAutenticacaoRepository autenticationRepository)
         {
@@ -30,15 +32,15 @@ namespace APIFinanceiro.Business.Services
         public string GerarToken(UsuarioPermissaoModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("Secret");
+            var key = Encoding.ASCII.GetBytes(_config["TokenManagement:Secret"]!);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Nome!),
-
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                    new Claim(ClaimTypes.Role, user.Permissao.ToString()!),
+                    new Claim("Id", user.Id.ToString()!)
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

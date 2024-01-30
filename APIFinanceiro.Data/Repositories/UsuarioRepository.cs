@@ -120,7 +120,8 @@ namespace APIFinanceiro.Data.Repositories
                                 Nome = @Nome,
                                 Email = @Email,
                                 Telefone = @Telefone,
-                                CPF = @CPF
+                                CPF = @CPF,
+                                DataNascimento = @DataNascimento
 						    WHERE
 							    Id = @Id";
 

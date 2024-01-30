@@ -92,14 +92,21 @@ namespace APIFinanceiro.Controller
                     return BadRequest(new { erro = mensagemErro });
                 }
 
-                if (await _riscoService.RetornarRiscoDescricao(descricao) == null)
+                var retornaRiscoDescricao = await _riscoService.RetornarRiscoDescricao(descricao);
+
+                if (retornaRiscoDescricao == null)
                 {
                     return NotFound(new { erro = "Risco não encontrado" });
                 }
 
-                risco.Descricao = descricao;
+                var riscoModel = new RiscoModel()
+                {
+                    Id = retornaRiscoDescricao.Id,
+                    GrauRisco = risco.GrauRisco,
+                    Descricao = risco.Descricao
+                };
 
-                if (await _riscoService.AlterarRisco(risco))
+                if (await _riscoService.AlterarRisco(riscoModel))
                 {
                     return Ok(risco);
                 }

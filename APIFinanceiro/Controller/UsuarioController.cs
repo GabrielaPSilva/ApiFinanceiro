@@ -100,15 +100,27 @@ namespace APIFinanceiro.Controller
                     return BadRequest(new { erro = mensagemErro });
                 }
 
-                if (await _usuarioService.RetornarUsuarioCPF(CPF) == null)
+                var retorno = await _usuarioService.RetornarUsuarioCPF(CPF);
+
+                if (retorno == null)
                 {
                     _logger.LogInformation("Usuário não encontrado");
                     return NotFound(new { erro = "Usuário não encontrado" });
                 }
 
-                usuario.CPF = CPF;
+                var usuarioModel = new UsuarioModel()
+                {
+                    Id = retorno.Id,
+                    IdRisco = usuario.IdRisco,
+                    Nome = usuario.Nome,
+                    CPF = usuario.CPF,
+                    DataNascimento = usuario.DataNascimento,
+                    Email = usuario.Email,
+                    Telefone = usuario.Telefone,
+                    Ativo = true
+                };
 
-                if (await _usuarioService.AlterarUsuario(usuario))
+                if (await _usuarioService.AlterarUsuario(usuarioModel))
                 {
                     _logger.LogInformation("Usuário alterado.");
                     return Ok(usuario);
