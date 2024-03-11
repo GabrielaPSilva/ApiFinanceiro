@@ -1,15 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "513tac2+Lk33bOUIlt1/b+gaiTcPGdIO5iHiBcUJGBurCo4qG0lUDGLNvrHHdiU5xN/ynPUEYFwT0qJsi2ciTw==",
+  "dgSpecHash": "vB06rP4xz9O212iGTdvOjrK7vNKZAPorYOcaJYsO0SrUvyE64wbaYEIhxDaLDahaKL87TgxiVVj6bg2yeu0Ixw==",
   "success": true,
-  "projectFilePath": "C:\\Git\\APIFinanceiro\\APIFinanceiro.Model\\APIFinanceiro.Model.csproj",
-  "expectedPackageFiles": [],
-  "logs": [
-    {
-      "code": "NU1803",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "You are running the 'restore' operation with an 'HTTP' source, 'http://nuget.fiap.com.br/nuget'. Non-HTTPS access will be removed in a future version. Consider migrating to an 'HTTPS' source."
-    }
-  ]
+  "projectFilePath": "C:\\Git\\ApiFinanceiro\\APIFinanceiro.Model\\APIFinanceiro.Model.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\gabriela.pinheiro\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.16\\microsoft.windowsdesktop.app.ref.7.0.16.nupkg.sha512",
+    "C:\\Users\\gabriela.pinheiro\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.16\\microsoft.netcore.app.ref.7.0.16.nupkg.sha512",
+    "C:\\Users\\gabriela.pinheiro\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.16\\microsoft.aspnetcore.app.ref.7.0.16.nupkg.sha512"
+  ],
+  "logs": []
 }
