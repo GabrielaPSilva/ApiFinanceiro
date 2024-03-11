@@ -1,25 +1,37 @@
-name: CI / CD Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
+
+      - name: Install .NET SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '7.0' 
+
+      - name: Restore dependencies
+        run: dotnet restore
 
       - name: Build
-        run: make
-        
-      - name: Test
-        run: make test
+        run: dotnet build --configuration Release
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
+      - name: Publish
+        run: dotnet publish -c Release -o ./publish
+
       - name: Deploy
-        run: make deploy
+        uses: actions/checkout@v1
+        with:
+          script: |
+            sudo systemctl stop your-api.service || true
+            sudo rm -rf /var/www/your-api/*
+            sudo cp -r ./publish/* /var/www/your-api/
+            sudo systemctl start your-api.service

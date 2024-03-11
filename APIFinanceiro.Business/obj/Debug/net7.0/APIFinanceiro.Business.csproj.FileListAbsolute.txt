@@ -15,3 +15,4 @@ C:\Git\APIFinanceiro\APIFinanceiro.Business\obj\Debug\net7.0\APIFinanceiro.Busin
 C:\Git\APIFinanceiro\APIFinanceiro.Business\obj\Debug\net7.0\refint\APIFinanceiro.Business.dll
 C:\Git\APIFinanceiro\APIFinanceiro.Business\obj\Debug\net7.0\APIFinanceiro.Business.pdb
 C:\Git\APIFinanceiro\APIFinanceiro.Business\obj\Debug\net7.0\ref\APIFinanceiro.Business.dll
+C:\Git\ApiFinanceiro\APIFinanceiro.Business\obj\Debug\net7.0\APIFinanceiro.Business.sourcelink.json

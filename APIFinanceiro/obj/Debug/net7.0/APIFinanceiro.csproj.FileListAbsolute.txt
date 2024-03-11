@@ -58,3 +58,4 @@ C:\Git\APIFinanceiro\APIFinanceiro\bin\Debug\net7.0\Microsoft.IdentityModel.Prot
 C:\Git\APIFinanceiro\APIFinanceiro\bin\Debug\net7.0\Microsoft.Extensions.Configuration.dll
 C:\Git\APIFinanceiro\APIFinanceiro\bin\Debug\net7.0\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Git\APIFinanceiro\APIFinanceiro\bin\Debug\net7.0\Microsoft.Extensions.Primitives.dll
+C:\Git\ApiFinanceiro\APIFinanceiro\obj\Debug\net7.0\APIFinanceiro.sourcelink.json

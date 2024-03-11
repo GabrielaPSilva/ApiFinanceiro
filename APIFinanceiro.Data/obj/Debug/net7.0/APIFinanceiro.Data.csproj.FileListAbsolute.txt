@@ -13,3 +13,4 @@ C:\Git\APIFinanceiro\APIFinanceiro.Data\obj\Debug\net7.0\ref\APIFinanceiro.Data.
 C:\Git\APIFinanceiro\APIFinanceiro.Data\bin\Debug\net7.0\APIFinanceiro.Model.dll
 C:\Git\APIFinanceiro\APIFinanceiro.Data\bin\Debug\net7.0\APIFinanceiro.Model.pdb
 C:\Git\APIFinanceiro\APIFinanceiro.Data\obj\Debug\net7.0\APIFinanceiro.Data.csproj.CopyComplete
+C:\Git\ApiFinanceiro\APIFinanceiro.Data\obj\Debug\net7.0\APIFinanceiro.Data.sourcelink.json
